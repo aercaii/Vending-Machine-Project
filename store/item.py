@@ -12,7 +12,11 @@ class Item:
         else:
             print("In Stock")
     def purchase(self):
-        self.quantity -= 1
+        if self.quantity == 0:
+            
+            print("ERR: Item is out of stock")
+        else:
+            self.quantity -= 1
         print(f"Sucessfully purchaed: {self.name} \n Quantity: {self.quantity}")
         
     
