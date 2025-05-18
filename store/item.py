@@ -17,7 +17,8 @@ class Item:
             print("ERR: Item is out of stock")
         else:
             self.quantity -= 1
-        print(f"Sucessfully purchaed: {self.name} \n Quantity: {self.quantity}")
+        print(f"Sucessfully purchased: {self.name} \n Quantity: {self.quantity}")
+        print("-"*40)
         
     
         

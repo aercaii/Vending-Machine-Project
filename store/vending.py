@@ -1,23 +1,28 @@
-from item import Item
+
 
 class VendingMachine:
-    def __init__(self,item_codes, item_objects):
+    def __init__(self):
         self.item_codes = {}
-        self.item_objects = item_objects
+        
         ##self.coin_denominations = [0.1,0.5,0.25]
         self.deposited = 0
     def add_item(self,code,item):
         self.item_codes[code] = item
+        
+        
 
     def display_items(self):
-        for code,item in self.item_objects.items():
+        for code,item in self.item_codes.items():
             print(f"{code} : {item}")
     def insert_money(self,amount:float):
         self.deposited += amount
 
     def select_item(self,code):
-        item  = self.item_codes[code]
-        return item
+        if code in self.item_codes:
+            print(f"Item Found, you have selected {self.item_codes[code]}")
+        else:
+            print("ERR | Item not found or wrong code entered")
+            
     
     def dispense_item(self,item):
         if self.deposited == 0:
