@@ -1,4 +1,4 @@
-
+from store.item import Item
 
 class VendingMachine:
     def __init__(self):
@@ -6,8 +6,9 @@ class VendingMachine:
         
         ##self.coin_denominations = [0.1,0.5,0.25]
         self.deposited = 0
-    def add_item(self,code,item):
+    def add_item(self,code,item,quantity,price):
         self.item_codes[code] = item
+        Item(name=item,code=code,quantity=quantity, price=price)
         
         
 
@@ -20,9 +21,10 @@ class VendingMachine:
     def select_item(self,code):
         if code in self.item_codes:
             print(f"Item Found, you have selected {self.item_codes[code]}")
+            return 1
         else:
             print("ERR | Item not found or wrong code entered")
-            
+            return 0
     
     def dispense_item(self,item):
         if self.deposited == 0:

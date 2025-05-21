@@ -1,8 +1,9 @@
 class Item:
-    def __init__(self,name,price, quantity):
+    def __init__(self,name,price, quantity,code):
         self.name = name
         self.price = price
         self.quantity = quantity
+        self.code = code
 
     def check_stock(self):
         if self.quantity == 0:
@@ -11,6 +12,8 @@ class Item:
             print("ERR: Stock is under 0")
         else:
             print("In Stock")
+    def return_stock(self):
+        return self.quantity
     def purchase(self):
         if self.quantity == 0:
             
