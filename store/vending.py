@@ -6,50 +6,66 @@ class VendingMachine:
         
         ##self.coin_denominations = [0.1,0.5,0.25]
         self.deposited = 0
-    def add_item(self,code,item,quantity,price):
-        self.item_codes[code] = item
-        Item(name=item,code=code,quantity=quantity, price=price)
+    def add_item(self, code, item, quantity, price):
+        
+        self.item_codes[code] = Item(name=item, code=code, quantity=quantity, price=price)
         
         
 
     def display_items(self):
-        for code,item in self.item_codes.items():
-            print(f"{code} : {item}")
+        
+        output = f"Items in Vending Machine:\n"
+        for code, item in self.item_codes.items():
+            output += f"{code}: {item.name} | {item.quantity} in stock | ${item.price:.2f}\n"
+        return output
+    
     def insert_money(self,amount:float):
         self.deposited += amount
 
-    def select_item(self,code):
+    def select_item(self, code):
+        
         if code in self.item_codes:
-            print(f"Item Found, you have selected {self.item_codes[code]}")
+            print(f"Item Found, you have selected {self.item_codes[code].name}")
             return 1
+        elif code == 'exit':
+            pass
+    
         else:
             print("ERR | Item not found or wrong code entered")
             return 0
     
-    def dispense_item(self,item):
+    def dispense_item(self, item):
+        
         if self.deposited == 0:
-            print("Insufficent Funds")
-        print(f"Dispensing {item}")
+            print("Insufficient Funds")
+            return False
+        if item.quantity == 0:
+            return False
+        item.purchase()  
+        return True
 
-    def calculate_change(self):
-        d = 0.10
-        p = 0.01
-        q = 0.25
-        dime_total = 0 
-        penny_total = 0
-        quarter_total = 0
-
-        amount = self.deposited
-
-        if amount >= 0.25:
-            quarter_total = amount//q
-            amount = round(quarter_total * q)
-        if amount >= 0.10:
-            dime_total = amount//d
-            amount = round(dime_total * d)
-        if amount >= 0.01:
-            penny_total = amount//p
-            amount = round(penny_total * p)
+    def calculate_change(self, item_price):
         
-        return quarter_total,dime_total,penny_total
+        # Define coin values
+        QUARTER = 0.25
+        DIME = 0.10
+        PENNY = 0.01
         
+        # Calculate change needed
+        change = self.deposited - item_price
+        if change < 0:
+            return 0, 0, 0  # Not enough money inserted
+        
+        
+        change_cents = int(round(change * 100))
+        
+       
+        quarter_total = change_cents // int(QUARTER * 100)
+        change_cents = change_cents % int(QUARTER * 100)
+        
+        dime_total = change_cents // int(DIME * 100)
+        change_cents = change_cents % int(DIME * 100)
+        
+        penny_total = change_cents // int(PENNY * 100)
+        
+        return int(quarter_total), int(dime_total), int(penny_total)
