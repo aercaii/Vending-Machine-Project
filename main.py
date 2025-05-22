@@ -54,7 +54,7 @@ def main_interaction():
                     exit()
                         
                     
-                if item.quantity == 0:
+                if item.quantity == 0: # item out of stock
                     print(f"{RED}Item out of stock.{RESET}")
                     time.sleep(1.5)
                     print(f"{GREEN}Returning your deposited amount: ${amount:.2f}{RESET}")
