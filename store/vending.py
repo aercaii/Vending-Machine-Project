@@ -6,9 +6,13 @@ class VendingMachine:
         
         ##self.coin_denominations = [0.1,0.5,0.25]
         self.deposited = 0
+
+    def __str__(self):
+        return self.item_codes.items().name
     def add_item(self, code, item, quantity, price):
         
         self.item_codes[code] = Item(name=item, code=code, quantity=quantity, price=price)
+   
         
         
 

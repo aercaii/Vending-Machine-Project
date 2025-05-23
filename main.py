@@ -3,8 +3,10 @@ from store.item import Item
 import time
 import colorama
 from colorama import Fore,Style,init
-
-
+import logging
+from logging_system import Logging_file
+import datetime
+from datetime import datetime
 # items
 item1 = Item("Coke", price=1.00,quantity=10,code="A1")
 item2 = Item("Protein Bar", price=1.50,quantity=1,code="B2")
@@ -37,6 +39,7 @@ def main_interaction():
         if (vm.select_item(code=code_input)) == 1: # if the function returns 1 (item found) 0 (item not found)
                 item = vm.item_codes[code_input]
                 
+                
                 amount = float(input("Enter an amount to purchase ($) : "))
                 if amount <= 0:
                     print(f"{RED}Invalid amount entered. Please enter a positive amount.{RESET}")
@@ -63,16 +66,22 @@ def main_interaction():
                         
                 
                 print(f"{GREEN}Dispensing {item.name}...{RESET}")
+                receipt = Logging_file(time=datetime.now(),item=item.name,price=f"${item.price:.2f}",change=f"{quarters} quarters {dimes} dimes {pennies} penny(ies) returned")
                 time.sleep(3)
                 if vm.dispense_item(item=item):
                         
                     if quarters > 0 or dimes > 0 or pennies > 0:
                         print(f"Change returned: {quarters} quarter(s), {dimes} dime(s), {pennies} penny(ies)")
+                        print(f"{BLUE} Printing and Downloading Receipt")
+                        receipt.write_file()
                         time.sleep(3)
 
                     else:
                         print(f"No change returned.")
+                        print(f"{BLUE} Printing and Downloading Receipt")
+                        receipt.write_file()
                         time.sleep(3)
+
                 else:
                     print(f"{RED}Failed to dispense item.{RESET}")
                     time.sleep(2)

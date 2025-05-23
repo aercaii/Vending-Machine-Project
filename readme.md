@@ -1,1 +1,1 @@
-To run the program, run main.py and interact with the prompts.
+To run the program, run main.py and interact with the prompts. The program also gives you a purchase reciept.
